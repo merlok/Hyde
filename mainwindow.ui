@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="lineNumber" name="codeEditor"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>600</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="action_new"/>
+    <addaction name="action_open"/>
+    <addaction name="action_Save"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="actionC_lose"/>
+    <addaction name="separator"/>
+    <addaction name="actionQuit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+    <addaction name="separator"/>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="separator"/>
+    <addaction name="actionIndent"/>
+    <addaction name="actionUnindent"/>
+    <addaction name="separator"/>
+    <addaction name="actionComment"/>
+    <addaction name="actionUncomment"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_new"/>
+   <addaction name="action_open"/>
+   <addaction name="action_Save"/>
+   <addaction name="separator"/>
+   <addaction name="actionUndo"/>
+   <addaction name="actionRedo"/>
+   <addaction name="separator"/>
+   <addaction name="actionCut"/>
+   <addaction name="actionCopy"/>
+   <addaction name="actionPaste"/>
+   <addaction name="separator"/>
+   <addaction name="actionIndent"/>
+   <addaction name="actionUnindent"/>
+   <addaction name="separator"/>
+   <addaction name="actionComment"/>
+   <addaction name="actionUncomment"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget">
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents"/>
+  </widget>
+  <action name="action_open">
+   <property name="icon">
+    <iconset>
+     <normalon>:/img/img/open.png</normalon>
+    </iconset>
+   </property>
+   <property name="text">
+    <string>&amp;open</string>
+   </property>
+   <property name="toolTip">
+    <string>Open file</string>
+   </property>
+  </action>
+  <action name="action_new">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/new.png</normaloff>:/img/img/new.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;new</string>
+   </property>
+   <property name="toolTip">
+    <string>New file</string>
+   </property>
+  </action>
+  <action name="action_Save">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/save.png</normaloff>:/img/img/save.png</iconset>
+   </property>
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+   <property name="toolTip">
+    <string>Save the file</string>
+   </property>
+  </action>
+  <action name="actionC_lose">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/closeall.png</normaloff>:/img/img/closeall.png</iconset>
+   </property>
+   <property name="text">
+    <string>close</string>
+   </property>
+   <property name="toolTip">
+    <string>Close file</string>
+   </property>
+  </action>
+  <action name="actionComment">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/comment.png</normaloff>:/img/img/comment.png</iconset>
+   </property>
+   <property name="text">
+    <string>Comment</string>
+   </property>
+   <property name="toolTip">
+    <string>Comment selection</string>
+   </property>
+  </action>
+  <action name="actionUncomment">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/uncomment.png</normaloff>:/img/img/uncomment.png</iconset>
+   </property>
+   <property name="text">
+    <string>Uncomment</string>
+   </property>
+   <property name="toolTip">
+    <string>Uncomment selection</string>
+   </property>
+  </action>
+  <action name="actionIndent">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/indent.png</normaloff>:/img/img/indent.png</iconset>
+   </property>
+   <property name="text">
+    <string>Indent</string>
+   </property>
+   <property name="toolTip">
+    <string>Indent selection</string>
+   </property>
+  </action>
+  <action name="actionUnindent">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/unindent.png</normaloff>:/img/img/unindent.png</iconset>
+   </property>
+   <property name="text">
+    <string>Unindent</string>
+   </property>
+   <property name="toolTip">
+    <string>Unindent selection</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/copy.png</normaloff>:/img/img/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>copy</string>
+   </property>
+   <property name="toolTip">
+    <string>Copy selected text</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/paste.png</normaloff>:/img/img/paste.png</iconset>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="toolTip">
+    <string>Paste copied text</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/cut.png</normaloff>:/img/img/cut.png</iconset>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="toolTip">
+    <string>Cut selected text</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/undo.png</normaloff>:/img/img/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+   <property name="toolTip">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/redo.png</normaloff>:/img/img/redo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
+   </property>
+   <property name="toolTip">
+    <string>Redo</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/saveas.png</normaloff>:/img/img/saveas.png</iconset>
+   </property>
+   <property name="text">
+    <string>Save as...</string>
+   </property>
+  </action>
+  <action name="actionQuit">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/img/img/exit.png</normaloff>:/img/img/exit.png</iconset>
+   </property>
+   <property name="text">
+    <string>Quit</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>lineNumber</class>
+   <extends>QPlainTextEdit</extends>
+   <header location="global">linenumber.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

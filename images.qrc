@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/img" >
+        <file>img/bold.png</file>
+        <file>img/closeall.png</file>
+        <file>img/comment.png</file>
+        <file>img/copy.png</file>
+        <file>img/cut.png</file>
+        <file>img/down.png</file>
+        <file>img/editor.png</file>
+        <file>img/exit.png</file>
+        <file>img/fillcolor.png</file>
+        <file>img/find.png</file>
+        <file>img/formats.png</file>
+        <file>img/goto.png</file>
+        <file>img/indent.png</file>
+        <file>img/italic.png</file>
+        <file>img/new.png</file>
+        <file>img/open.png</file>
+        <file>img/package_settings.png</file>
+        <file>img/paste.png</file>
+        <file>img/print.png</file>
+        <file>img/redo.png</file>
+        <file>img/reload.png</file>
+        <file>img/replace.png</file>
+        <file>img/save.png</file>
+        <file>img/saveas.png</file>
+        <file>img/settings.png</file>
+        <file>img/strikeout.png</file>
+        <file>img/strokecolor.png</file>
+        <file>img/textcolor.png</file>
+        <file>img/uncomment.png</file>
+        <file>img/underline.png</file>
+        <file>img/undo.png</file>
+        <file>img/unindent.png</file>
+        <file>img/up.png</file>
+    </qresource>
+</RCC>
