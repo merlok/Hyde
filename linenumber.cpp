@@ -118,64 +118,63 @@ void lineNumber::lineNumberPaint(QPaintEvent *event)
     }
 }
 
+QChar lineNumber::getPrevChar(){
+     QTextCursor cursor   = textCursor();
+     int         position = cursor.position();
+     QChar       key      = '\0';
+
+     while( key.isPrint() == false && position >= 0 ){
+        position--;
+        key = toPlainText()[position];
+     }
+
+     return key;
+}
+
 void lineNumber::textChanged()
 {
-   QTextCursor cursor= textCursor();
-   QString tabbing="";
-   QChar act='\0';
+   QTextCursor cursor  = textCursor();
+   QString     tabbing = "";
+   QChar       key     = '\0';
+   int         col     = 0,
+               pos     = cursor.position();
 
    changed = true;
-   int col = 0;
-   int pos = cursor.position();
-   if (pos > 0)
-       act = toPlainText()[pos - 1];
-   else
-       act = toPlainText()[pos];
+   key     = ( pos > 0 ? toPlainText()[pos - 1] : toPlainText()[pos] );
 
    cursor.movePosition(QTextCursor::Up,QTextCursor::MoveAnchor,1);
    cursor.movePosition(QTextCursor::EndOfLine);
    cursor.movePosition(QTextCursor::PreviousWord);
-   //cursor.movePosition(QTextCursor::NextWord);
-   if (!backspace)
-   {
-       if (act == '\n')
-       {
-           cursor.movePosition(QTextCursor::StartOfLine);
-           if (!toPlainText()[cursor.position()].isPrint())
-                cursor.movePosition(QTextCursor::NextWord);
-           if (toPlainText()[cursor.position()] == '{')
-               col = cursor.columnNumber() + 1;
-           else
-               col = cursor.columnNumber();
-           if (col != 0)
-           {
-               tabbing = QString(col,'\t');
-               cursor.movePosition(QTextCursor::Down);
-               cursor.movePosition(QTextCursor::StartOfLine);
-               cursor.insertText(tabbing);
-               cursor.movePosition(QTextCursor::EndOfLine);
-               setTextCursor(cursor);
-           }
-       }
-       if (act == '}')
-       {
-            qDebug() << "closed";
-            cursor.movePosition(QTextCursor::StartOfLine);
-            if (!toPlainText()[cursor.position()].isPrint())
-                cursor.movePosition(QTextCursor::NextWord);
-            if (toPlainText()[cursor.position()] == '{')
-               col=cursor.columnNumber();
-           else
-               col = cursor.columnNumber()-1;
-           if (col >= 0)
-           {
-            cursor.setPosition(pos-1);
-            cursor.deleteChar();
-            cursor.movePosition(QTextCursor::StartOfLine);
-            tabbing = QString(col,'\t');
-            cursor.insertText(tabbing+"}");
-            setTextCursor(cursor);
-           }
+
+   if (!backspace) {
+       switch( key.toAscii() ){
+            case '\n' :
+                 cursor.movePosition(QTextCursor::StartOfLine);
+                 col = (getPrevChar() == '{' ? cursor.columnNumber() + 1 : cursor.columnNumber());
+
+                 if ( col != 0 ) {
+                   tabbing = QString(col,'\t');
+                   cursor.movePosition(QTextCursor::Down);
+                   cursor.movePosition(QTextCursor::StartOfLine);
+                   cursor.insertText(tabbing);
+                   cursor.movePosition(QTextCursor::EndOfLine);
+                   setTextCursor(cursor);
+                 }
+            break;
+
+            case '}' :
+                cursor.movePosition(QTextCursor::StartOfLine);
+                col = (getPrevChar() == '{' ? cursor.columnNumber() + 1 : cursor.columnNumber());
+
+                if( col >= 0 ){
+                    cursor.setPosition(pos-1);
+                    cursor.deleteChar();
+                    cursor.movePosition(QTextCursor::StartOfLine);
+                    tabbing = QString(col,'\t');
+                    cursor.insertText(tabbing+"}");
+                    setTextCursor(cursor);
+                }
+            break;
        }
    }
 

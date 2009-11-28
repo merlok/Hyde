@@ -63,6 +63,7 @@ private slots:
     void textChanged();
 
 private:
+    QChar getPrevChar();
     QWidget *lineNumberArea;
     highlighter *Syntax;
     bool backspace;
