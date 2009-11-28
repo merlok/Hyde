@@ -1,0 +1,145 @@
+<grammar language="C/C++" ext="c|cpp|h|hpp">
+
+	<strings color="#006600">".+"</strings>
+	
+	<methods color="#0000FF">\b[A-Za-z0-9_]+(?=\()</methods>
+	
+	<comments color="#006600">
+		<single>/[^\n]*</single>
+		<multi>
+			<start>/\*</start>
+			<end>\*/</end>
+		</multi>
+	</comments>
+	
+	<keywords color="#660000">
+		<item>\binclude\b</item> 
+		<item>\bimport\b</item> 
+	</keywords>
+	
+	<keywords color="#000066">
+		<item>\bif\b</item> 
+		<item>\belse\b</item> 
+		<item>\bfor\b</item> 
+		<item>\breturn\b</item> 
+		<item>\bwhile\b</item> 
+		<item>\bof\b</item> 
+		<item>\bforeach\b</item> 
+		<item>\bfunction\b</item> 
+		<item>\b\->\b</item> 
+	</keywords>
+	
+	<keywords color="#660066">
+		<item>\bisint\b</item>
+		<item>\bisfloat\b</item>
+		<item>\bischar\b</item>
+		<item>\bisstring\b</item>
+		<item>\bisarray\b</item>
+		<item>\bismap\b</item>
+		<item>\bisalias\b</item>
+		<item>\btypeof\b</item>
+		<item>\bsizeof\b</item>
+		<item>\btoint\b</item>
+		<item>\btostring\b</item>
+		<item>\btoxml\b</item>
+		<item>\bfromxml\b</item>
+		<item>\bacos\b</item>
+		<item>\basin\b</item>
+		<item>\batan\b</item>
+		<item>\batan2\b</item>
+		<item>\bceil\b</item>
+		<item>\bcos\b</item>
+		<item>\bcosh\b</item>
+		<item>\bexp\b</item>
+		<item>\bfabs\b</item>
+		<item>\bfloor\b</item>
+		<item>\bfmod\b</item>
+		<item>\blog\b</item>
+		<item>\blog10\b</item>
+		<item>\bpow\b</item>
+		<item>\bsin\b</item>
+		<item>\bsinh\b</item>
+		<item>\bsqrt\b</item>
+		<item>\btan\b</item>
+		<item>\btanh\b</item>
+		<item>\barray\b</item>
+		<item>\belements\b</item>
+		<item>\bpop\b</item>
+		<item>\bremove\b</item>
+		<item>\bcontains\b</item>
+		<item>\bstruct\b</item>
+		<item>\bmap\b</item>
+		<item>\bmapelements\b</item>
+		<item>\bmappop\b</item>
+		<item>\bunmap\b</item>
+		<item>\bismapped\b</item>
+		<item>\bstrlen\b</item>
+		<item>\bstrfind\b</item>
+		<item>\bsubstr\b</item>
+		<item>\bstrreplace\b</item>
+		<item>\bstrsplit\b</item>
+		<item>\bmatrix\b</item>
+		<item>\bcolumns\b</item>
+		<item>\brows\b</item>
+		<item>\brex_match\b</item>
+		<item>\brex_matches\b</item>
+		<item>\brex_replace\b</item>
+		<item>\bprint\b</item>
+		<item>\bprintln\b</item>
+		<item>\binput\b</item>
+		<item>\bexec\b</item>
+		<item>\bfork\b</item>
+		<item>\bgetpid\b</item>
+		<item>\bwait\b</item>
+		<item>\bpopen\b</item>
+		<item>\bpclose\b</item>
+		<item>\bexit\b</item>
+		<item>\bvar_names\b</item>
+		<item>\bvar_values\b</item>
+		<item>\buser_functions\b</item>
+		<item>\bcore_functions\b</item>
+		<item>\bcall\b</item>
+		<item>\bdllopen\b</item>
+		<item>\bdlllink\b</item>
+		<item>\bdllcall\b</item>
+		<item>\bdllclose\b</item>
+		<item>\bticks\b</item>
+		<item>\busleep\b</item>
+		<item>\bsleep\b</item>
+		<item>\btime\b</item>
+		<item>\bstrtime\b</item>
+		<item>\bstrdate\b</item>
+		<item>\bfopen\b</item>
+		<item>\bfseekset\b</item>
+		<item>\bfseekcur\b</item>
+		<item>\bfseekend\b</item>
+		<item>\bftell\b</item>
+		<item>\bfsize\b</item>
+		<item>\bfread\b</item>
+		<item>\bfgets\b</item>
+		<item>\bfwrite\b</item>
+		<item>\bfclose\b</item>
+		<item>\bfile\b</item>
+		<item>\breaddir\b</item>
+		<item>\bsettimeout\b</item>
+		<item>\bconnect\b</item>
+		<item>\bserver\b</item>
+		<item>\baccept\b</item>
+		<item>\brecv\b</item>
+		<item>\bsend\b</item>
+		<item>\bclose\b</item>
+		<item>\bhttp_get\b</item>
+		<item>\bhttp_post\b</item>
+		<item>\bxml_load\b</item>
+		<item>\bxml_parse\b</item>
+		<item>\burlencode\b</item>
+		<item>\burldecode\b</item>
+		<item>\bbase64encode\b</item>
+		<item>\bbase64decode\b</item>
+		<item>\bpthread_create\b</item>
+		<item>\bpthread_exit\b</item>
+		<item>\bpthread_join\b</item>
+	</keywords>
+		
+</grammar>
+

@@ -26,7 +26,7 @@ highlighter::highlighter(QTextDocument *parent)
     HighlightingRule rule;
 
     QDomDocument doc("");
-    QFile file( "c.template.xml" );
+    QFile file( "grammar.xml" );
     if( !file.open( QIODevice::ReadOnly | QIODevice::Text ) )
         return;
 
