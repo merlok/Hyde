@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->dockWidget->setWidget(man);
 
     fileName = "";
-    filter = "All files (*.*);; C source (*.c *.cpp *.cs);; C headers (*.h *.hpp);; java (*.java);; javascript(*.js)";
+    filter = "All files (*.*);; Hybris Source (*.hs)";
 
     connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(close()));
     connect(findTool,SIGNAL(nextClicked()),this,SLOT(findNext()));
@@ -135,11 +135,6 @@ void MainWindow::openDialog()
         int ret = ui->codeEditor->openFile(fileName);
         if (!ret)
         {
-            /*msgBox.setWindowTitle("Warning");
-            msgBox.setText("The selected file not exist");
-            msgBox.setIcon(QMessageBox::Warning);
-            msgBox.setStandardButtons(QMessageBox::Ok);
-            msgBox.exec();*/
             QMessageBox::warning(this,tr("warning"),"The selected file not exist",QMessageBox::Ok);
         }
     }

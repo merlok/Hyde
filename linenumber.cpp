@@ -49,7 +49,7 @@ int lineNumber::lineNumberAreaWidth()
         max /=10;
         digits++;
     }
-    int space=3+ fontMetrics().width(QLatin1Char('9'))*digits;
+    int space= 5 + fontMetrics().width(QLatin1Char('9'))*digits;
     return space;
 }
 
@@ -97,7 +97,7 @@ void lineNumber::highlightLine()
 void lineNumber::lineNumberPaint(QPaintEvent *event)
 {
     QPainter painter(lineNumberArea);
-    painter.fillRect(event->rect(),Qt::lightGray);
+    painter.fillRect(event->rect(), QColor( "#F2F2F2" ) );
     QTextBlock block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
     int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
@@ -108,8 +108,8 @@ void lineNumber::lineNumberPaint(QPaintEvent *event)
         if(block.isVisible() && bottom >= event->rect().top())
         {
             QString number = QString::number(blockNumber+1);
-            painter.setPen(Qt::black);
-            painter.drawText(0,top,lineNumberArea->width(),fontMetrics().height(),Qt::AlignRight,number);
+            painter.setPen( QColor( "#B5B5B5" ) );
+            painter.drawText(0,top,lineNumberArea->width(),fontMetrics().height(),Qt::AlignCenter, number );
         }
         block=block.next();
         top=bottom;
@@ -120,7 +120,7 @@ void lineNumber::lineNumberPaint(QPaintEvent *event)
 
 void lineNumber::textChanged()
 {
-QTextCursor cursor= textCursor();
+   QTextCursor cursor= textCursor();
    QString tabbing="";
    QChar act='\0';
 
@@ -128,7 +128,7 @@ QTextCursor cursor= textCursor();
    int col = 0;
    int pos = cursor.position();
    if (pos > 0)
-       act = toPlainText()[pos -1];
+       act = toPlainText()[pos - 1];
    else
        act = toPlainText()[pos];
 
@@ -144,7 +144,7 @@ QTextCursor cursor= textCursor();
            if (!toPlainText()[cursor.position()].isPrint())
                 cursor.movePosition(QTextCursor::NextWord);
            if (toPlainText()[cursor.position()] == '{')
-               col=cursor.columnNumber() + 1;
+               col = cursor.columnNumber() + 1;
            else
                col = cursor.columnNumber();
            if (col != 0)
