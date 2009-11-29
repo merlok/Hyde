@@ -97,23 +97,21 @@ void lineNumber::highlightLine()
 void lineNumber::lineNumberPaint(QPaintEvent *event)
 {
     QPainter painter(lineNumberArea);
-    painter.fillRect(event->rect(), QColor( "#F2F2F2" ) );
     QTextBlock block = firstVisibleBlock();
-    int blockNumber = block.blockNumber();
-    int top = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
-    int bottom = top+(int)blockBoundingRect(block).height();
+    int blockNumber  = block.blockNumber();
+    int top          = (int)blockBoundingGeometry(block).translated(contentOffset()).top();
+    int bottom       = top + (int)blockBoundingRect(block).height();
 
-    while(block.isValid() && top <= event->rect().bottom())
-    {
-        if(block.isVisible() && bottom >= event->rect().top())
-        {
-            QString number = QString::number(blockNumber+1);
+    painter.fillRect(event->rect(), QColor( "#F2F2F2" ) );
+    while(block.isValid() && top <= event->rect().bottom()) {
+        if(block.isVisible() && bottom >= event->rect().top()) {
+            QString number = QString::number(blockNumber + 1);
             painter.setPen( QColor( "#B5B5B5" ) );
             painter.drawText(0,top,lineNumberArea->width(),fontMetrics().height(),Qt::AlignCenter, number );
         }
-        block=block.next();
-        top=bottom;
-        bottom=top+(int)blockBoundingRect(block).height();
+        block  = block.next();
+        top    = bottom;
+        bottom = top + (int)blockBoundingRect(block).height();
         ++blockNumber;
     }
 }
@@ -123,8 +121,7 @@ QChar lineNumber::getPrevChar(){
      int         position = cursor.position();
      QChar       key      = '\0';
 
-     while( key.isPrint() == false && position >= 0 ){
-        position--;
+     while( key.isPrint() == false && position-- >= 1 ){
         key = toPlainText()[position];
      }
 
@@ -183,8 +180,7 @@ void lineNumber::textChanged()
 int lineNumber::openFile(QString fileName)
 {
     QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return 0;
     }
     setPlainText(file.readAll());
@@ -197,8 +193,7 @@ int lineNumber::openFile(QString fileName)
 int lineNumber::saveFile(QString fileName)
 {
     QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
         return 0;
     }
     QTextStream sr(&file);
@@ -232,8 +227,7 @@ void lineNumber::uncommentSelection(QTextCursor cursor)
 {
     QTextCursor walk = cursor;
     QString selection = cursor.selectedText();
-    if (selection.startsWith("/*") && selection[selection.length()-2] == '*' && selection[selection.length()-1] == '/')
-    {
+    if (selection.startsWith("/*") && selection[selection.length()-2] == '*' && selection[selection.length()-1] == '/') {
         walk.setPosition(cursor.selectionStart());
         walk.deleteChar();
         walk.deleteChar();
@@ -248,8 +242,7 @@ void lineNumber::indentSelection(QTextCursor cursor)
 {
     int pos = cursor.selectionStart();
     QStringList splitted = cursor.selectedText().split("\n");
-    for (int i=0;i < splitted.count();i++)
-    {
+    for( int i = 0; i < splitted.count(); i++ ) {
         splitted[i] = "\t" + splitted[i];
     }
     cursor.removeSelectedText();
@@ -264,10 +257,10 @@ void lineNumber::keyPressEvent(QKeyEvent *e)
     switch(e->key())
     {
         case Qt::Key_Backspace:
-            backspace=true;
+            backspace = true;
             break;
         default:
-            backspace=false;
+            backspace = false;
     }
     QPlainTextEdit::keyPressEvent(e);
 }

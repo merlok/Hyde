@@ -153,8 +153,7 @@ void highlighter::highlightBlock(const QString &text)
              setCurrentBlockState(1);
              commentLength = text.length() - startIndex;
          } else {
-             commentLength = endIndex - startIndex
-                             + commentEndExpression.matchedLength();
+             commentLength = endIndex - startIndex + commentEndExpression.matchedLength();
          }
          setFormat(startIndex, commentLength, multiLineCommentFormat);
          startIndex = commentStartExpression.indexIn(text, startIndex + commentLength);
