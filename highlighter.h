@@ -43,6 +43,8 @@ private:
     QRegExp commentStartExpression;
     QRegExp commentEndExpression;
 
+    void parseStyle( QDomElement& e, QTextCharFormat& format );
+
     QTextCharFormat keywordFormat;
     QTextCharFormat multiLineCommentFormat;
     QTextCharFormat classFormat;

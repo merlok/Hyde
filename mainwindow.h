@@ -48,6 +48,8 @@ private:
     manViever *man;
     findDialog *findTool;
     bool findVisible;
+    bool ownFile;
+    bool ownChanges;
 
 private slots:
     void on_actionIndent_triggered();

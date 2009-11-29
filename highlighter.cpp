@@ -18,11 +18,27 @@
 */
 #include "highlighter.h"
 
+void highlighter::parseStyle( QDomElement& e, QTextCharFormat& format ){
+    if( e.hasAttribute( "style" ) ){
+        QStringList styles = e.attribute( "style", "" ).split( ',' );
+
+        foreach( QString style, styles ){
+            if( style == "bold" ){
+                format.setFontWeight( QFont::Bold );
+            }
+            else if( style == "italic" ){
+                format.setFontItalic(true);
+            }
+            else if( style == "underline" ){
+                format.setFontUnderline(true);
+            }
+        }
+    }
+}
+
 highlighter::highlighter(QTextDocument *parent)
         :QSyntaxHighlighter(parent)
 {
-
-    QStringList patterns;
     HighlightingRule rule;
 
     QDomDocument doc("");
@@ -45,8 +61,8 @@ highlighter::highlighter(QTextDocument *parent)
         QDomElement e = n.toElement();
         if( !e.isNull() ) {
             if( e.tagName() == "keywords" ) {
+                parseStyle( e, keywordFormat );
                 keywordFormat.setForeground( QColor( e.attribute( "color", "" ).toAscii().constData() ) );
-                keywordFormat.setFontWeight( QFont::Bold );
 
                 QDomNode item = e.firstChild();
                 while( !item.isNull() ) {
@@ -60,31 +76,36 @@ highlighter::highlighter(QTextDocument *parent)
                 }
             }
             else if( e.tagName() == "strings" ){
+                parseStyle( e, stringFormat );
                 stringFormat.setForeground( QColor( e.attribute( "color", "" ).toAscii().constData() ) );
                 rule.pattern = QRegExp( e.text().toAscii().constData() );
                 rule.format  = stringFormat;
                 rules.append(rule);
             }
             else if( e.tagName() == "methods" ){
-                methodFormat.setFontItalic(true);
+                parseStyle( e, methodFormat );
                 methodFormat.setForeground( QColor( e.attribute( "color", "" ).toAscii().constData() ) );
                 rule.pattern = QRegExp( e.text().toAscii().constData() );
                 rule.format  = methodFormat;
                 rules.append(rule);
             }
             else if( e.tagName() == "comments" ){
+                parseStyle( e, commentFormat );
+                parseStyle( e, multiLineCommentFormat );
+
+                commentFormat.setForeground( QColor( e.attribute( "color", "" ).toAscii().constData() ) );
+                multiLineCommentFormat.setForeground( QColor( e.attribute( "color", "" ).toAscii().constData() ) );
+
                 QDomNode item = e.firstChild();
                 while( !item.isNull() ) {
                     QDomElement item_e = item.toElement();
                     if( !item_e.isNull() ){
                         if( item_e.tagName() == "single" ){
-                            commentFormat.setForeground( QColor( item_e.attribute( "color", "" ).toAscii().constData() ) );
                             rule.pattern = QRegExp( item_e.text().toAscii().constData() );
                             rule.format  = commentFormat;
                             rules.append(rule);
                         }
                         else if( item_e.tagName() == "multi" ){
-                            multiLineCommentFormat.setForeground( QColor( item_e.attribute( "color", "" ).toAscii().constData() ) );
                             QDomNode comms = item_e.firstChild();
                             while( !comms.isNull() ) {
                                 QDomElement comm_e = comms.toElement();

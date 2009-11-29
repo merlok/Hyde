@@ -2,7 +2,7 @@
 
 	<strings color="#006600">".+"</strings>
 		
-	<comments color="#006600">
+	<comments color="#CCCCCC" style="italic">
 		<single>\/\/[^\n]*</single>
 		<multi>
 			<start>\/\*</start>
@@ -12,7 +12,11 @@
 	
 	<methods color="#0000FF">\b[A-Za-z0-9_]+(?=\()</methods>
 	
-	<keywords color="#660000">
+	<keywords color="#AAAAAA">
+		<item>^#\!.+</item>
+	</keywords>
+	
+	<keywords color="#660000" style="bold">
 		<item>\binclude\b</item> 
 		<item>\bimport\b</item> 
 	</keywords>

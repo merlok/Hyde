@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     findVisible = false;
+    ownFile     = false;
+    ownChanges  = false;
     man = new manViever;
     findTool = new findDialog;
     findTool->setVisible(findVisible);
@@ -55,7 +57,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_action_open_triggered()
 {
-    if (ui->codeEditor->changed)
+    if( ownFile && ownChanges )
     {
         msgBox.setWindowTitle("File changed");
         msgBox.setText("The file is changed do you want to save it?");
@@ -98,15 +100,17 @@ void MainWindow::on_actionSave_as_triggered()
 {
     fileName = QFileDialog::getSaveFileName(this,tr("Save file as"),QDir::homePath(),filter);
     int ret = ui->codeEditor->saveFile(fileName);
-    if (!ret)
-    {
+    if (!ret) {
         QMessageBox::warning(this,tr("warning"),"Cannot save the file...\nDo you have permission?",QMessageBox::Ok);
+    }
+    else{
+        ownChanges = false;
     }
 }
 
 void MainWindow::on_action_new_triggered()
 {
-    if (ui->codeEditor->changed)
+    if ( ownFile && ownChanges )
     {
         msgBox.setWindowTitle("File changed");
         msgBox.setText("The file is changed do you want to save it?");
@@ -130,12 +134,14 @@ void MainWindow::on_action_new_triggered()
 void MainWindow::openDialog()
 {
     fileName = QFileDialog::getOpenFileName(this,tr("Open File"),QDir::homePath(),filter);
-    if (!fileName.isEmpty())
-    {
+    if (!fileName.isEmpty()) {
         int ret = ui->codeEditor->openFile(fileName);
-        if (!ret)
-        {
+        if (!ret) {
             QMessageBox::warning(this,tr("warning"),"The selected file not exist",QMessageBox::Ok);
+        }
+        else{
+            ownFile    = true;
+            ownChanges = false;
         }
     }
 }
@@ -227,6 +233,7 @@ void MainWindow::findPrev()
 
 void MainWindow::keyPressEvent(QKeyEvent *e)
 {
+    ownChanges = true;
     switch (e->key())
     {
         case Qt::Key_F3:
