@@ -8,12 +8,14 @@ SOURCES += main.cpp \
     linenumber.cpp \
     highlighter.cpp \
     manviever.cpp \
-    finddialog.cpp
+    finddialog.cpp \
+    intellisense.cpp
 HEADERS += mainwindow.h \
     linenumber.h \
     highlighter.h \
     manviever.h \
-    finddialog.h
+    finddialog.h \
+    intellisense.h
 FORMS += mainwindow.ui
 RESOURCES += images.qrc
 QT += xml

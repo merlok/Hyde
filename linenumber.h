@@ -20,6 +20,7 @@
 #define LINENUMBER_H
 
 #include <highlighter.h>
+#include <intellisense.h>
 #include <QtGui/QWidget>
 #include <QPlainTextEdit>
 #include <QObject>
@@ -29,7 +30,7 @@
 #include <QStringList>
 #include <QKeyEvent>
 #include <QRect>
-#include "hybris_completer.h"
+
 
 class QPaintEvent;
 class QResizeEvent;
@@ -69,7 +70,7 @@ private:
     QWidget *lineNumberArea;
     highlighter *Syntax;
     bool backspace;
-    hybris_completer *completer;
+    Intellisense *intellisense;
 };
 
 

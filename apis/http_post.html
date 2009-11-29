@@ -1,0 +1,46 @@
+<div style="background: #EEE; padding-left:5px; padding-top: 2px;">
+<h2>Descrizione</h2>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+<em>string | array</em> <b>http_post</b>( <em>string</em> host, <em>string</em> uri, <em>map</em> dati, [<em>map</em> headers (<em>opzionale</em>)], [<em>int</em> full_response (<em>opzionale</em>)] )
+</div>
+<br>
+Esegue una richiesta HTTP di tipo POST sull'url dell'host specificato nei parametri.
+<br><br>
+</div>
+<br>
+<div style="background: #EEE; padding-left:5px; padding-top: 2px;">
+<h2>Parametri</h2>
+<b><em>host</em></b>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+Hostname al quale inviare la richiesta, se viene specificato <b>https://</b> all'inizio dell'host il sistema eseguirà in automatico una richiesta HTTPS.
+</div>
+<br>
+<b><em>uri</em></b>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+Pagina alla quale inviare i dati in POST ed eventuali parametri della pagina.
+</div>
+<br>
+<b><em>dati</em></b>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+Una variabile di tipo map che identifica i dati da postare alla pagina, ad esempio:<br>
+<em>dati</em> = <b>map</b>( <em>"username"</em> -> <em>"root"</em>, <em>"password"</em> -> <em>"s0m3l337p4ssw0rd"</em> );
+</div>
+<br>
+<b><em>headers (opzionale)</em></b>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+Tramite questo parametro si può passare alla funzione una variabile di tipo map che determina come impostare gli header http della richiesta, ad esempio:<br>
+<em>headers</em> = <b>map</b>( <em>"User-Agent"</em> -> <em>"Firefox ecc ecc"</em> );
+</div>
+<br>
+<b><em>full_response (opzionale)</em></b>
+<div style="background: #FFF; padding-left:5px; padding-top: 2px; width:98%; border: 1px solid #AAA;">
+Se si imposta questo parametro a 1, la funzione restituirà un array dove il primo elemento saranno gli header del response http, ed il secondo i dati veri e propri.
+</div>
+<br><br>
+</div>
+<br>
+<div style="background: #EEE; padding-left:5px; padding-top: 2px;">
+<h2>Valore di ritorno</h2>
+Una stringa contenente il risultato della richiesta o, nel caso il parametro <em>full_response</em> sia impostato ad 1, un dove il primo elemento saranno gli header del response http, ed il secondo i dati veri e propri.
+<br><br>
+</div>

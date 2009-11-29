@@ -23,6 +23,9 @@
 #include <QListWidget>
 #include <QHBoxLayout>
 #include <QStringList>
+#include <QTextCursor>
+#include <QPlainTextEdit>
+#include <QDir>
 
 class Intellisense : public QWidget
 {
@@ -30,12 +33,14 @@ class Intellisense : public QWidget
 public:
     Intellisense(QWidget *parent=0);
     void move(int x,int y);
-    QString word;
     QString selected_match();
     void next_item();
     void prev_item();
+    void onKeyPress( int key, QTextCursor& cursor, QPlainTextEdit *editor );
 private:
-    QListWidget *completer;
+    QString      word;
+    QStringList  apis;
+    QListWidget *matches;
     QHBoxLayout *mainLayout;
 };
 
