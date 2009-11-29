@@ -33,6 +33,8 @@ lineNumber::lineNumber(QWidget *parent) : QPlainTextEdit(parent)
     changed = false;
     isNew = true;
     backspace=false;
+
+    completer = new hybris_completer(this);
 }
 
 lineNumber::~lineNumber()
@@ -253,7 +255,8 @@ void lineNumber::indentSelection(QTextCursor cursor)
 
 void lineNumber::keyPressEvent(QKeyEvent *e)
 {
-
+    completer->move(cursorRect().x()+25, cursorRect().y()+15);
+    setFocus();
     switch(e->key())
     {
         case Qt::Key_Backspace:
