@@ -30,7 +30,10 @@ class hybris_completer : public QWidget
 public:
     hybris_completer(QWidget *parent=0);
     void move(int x,int y);
-
+    QString word;
+    QString selected_match();
+    void next_item();
+    void prev_item();
 private:
     QListWidget *completer;
     QHBoxLayout *mainLayout;

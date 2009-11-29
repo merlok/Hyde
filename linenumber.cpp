@@ -255,15 +255,47 @@ void lineNumber::indentSelection(QTextCursor cursor)
 
 void lineNumber::keyPressEvent(QKeyEvent *e)
 {
+    int enter=0;
+
     completer->move(cursorRect().x()+25, cursorRect().y()+15);
     setFocus();
+    if ( (e->key() >= 32) && (e->key() <= 90))
+    {
+        completer->word += char(e->key());
+        completer->show();
+    }
     switch(e->key())
     {
+        case Qt::Key_Space:
+            completer->word="";
+            completer->setVisible(false);
+            break;
         case Qt::Key_Backspace:
             backspace = true;
+            break;
+        case Qt::Key_Return:
+            completer->word="";
+            if ( completer->isVisible() )
+            {
+                textCursor().insertText(completer->selected_match());
+                completer->hide();
+                enter = 1;
+            }
+            break;
+        case Qt::Key_Escape:
+            completer->setVisible(false);
+            break;
+        case Qt::Key_Down:
+            if ( completer->isVisible() )
+                completer->next_item();
+            break;
+        case Qt::Key_Up:
+            if ( completer->isVisible() )
+                completer->prev_item();
             break;
         default:
             backspace = false;
     }
-    QPlainTextEdit::keyPressEvent(e);
+    if (!enter)
+        QPlainTextEdit::keyPressEvent(e);
 }

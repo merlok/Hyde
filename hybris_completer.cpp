@@ -36,11 +36,27 @@ hybris_completer::hybris_completer(QWidget *parent)
     QStringList item ;
     item << "ciao" <<"bau"<< "miao";
     completer->addItems(item);
+    completer->setCurrentRow(0);
+    word="";
     this->hide();
+}
+
+void hybris_completer::prev_item()
+{
+    completer->setCurrentRow(completer->currentRow()-1);
+}
+
+void hybris_completer::next_item()
+{
+    completer->setCurrentRow(completer->currentRow()+1);
 }
 
 void hybris_completer::move(int x, int y)
 {
     setGeometry(x,y,WEIGHT,HEIGHT);
-    show();
+}
+
+QString hybris_completer::selected_match()
+{
+    return completer->currentItem()->text();
 }
