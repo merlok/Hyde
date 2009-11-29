@@ -1,9 +1,9 @@
 <grammar language="C/C++" ext="c|cpp|h|hpp">
 
-	<strings color="#006600">".+"</strings>
+	<strings color="#006600">"[^"]+"</strings>
 		
 	<comments color="#CCCCCC" style="italic">
-		<single>\/\/[^\n]*</single>
+		<single>\/\/[^\n]+</single>
 		<multi>
 			<start>\/\*</start>
 			<end>\*\/</end>
@@ -12,16 +12,13 @@
 	
 	<methods color="#0000FF">\b[A-Za-z0-9_]+(?=\()</methods>
 	
-	<keywords color="#AAAAAA">
-		<item>^#\!.+</item>
+	<keywords color="#AA0000">
+		<item>\-?0x[A-Fa-f0-9]+</item>
+		<item>\-?[0-9]+|([0-9]*\.[0-9]+)[eE][\-\+]?[0-9]+?</item>
+		<item>\-?[0-9]+</item>
 	</keywords>
 	
-	<keywords color="#660000" style="bold">
-		<item>\binclude\b</item> 
-		<item>\bimport\b</item> 
-	</keywords>
-	
-	<keywords color="#000066">
+	<keywords color="#000066" style="bold">
 		<item>\bif\b</item> 
 		<item>\belse\b</item> 
 		<item>\bfor\b</item> 
@@ -30,8 +27,17 @@
 		<item>\bof\b</item> 
 		<item>\bforeach\b</item> 
 		<item>\bfunction\b</item> 
+		<item>[\+\-\*\/=\~]</item> 
+
 		<item>\b\->\b</item> 
 	</keywords>
+	
+	<keywords color="#660000" style="bold,underline">
+		<item>\binclude\b</item> 
+		<item>\bimport\b</item> 
+	</keywords>
+	
+
 	
 </grammar>
 

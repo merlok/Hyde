@@ -75,7 +75,6 @@
     <value type="QString" >GTK_RC_FILES=/etc/gtk/gtkrc:/home/evilsocket/.gtkrc-1.2-gnome2</value>
     <value type="QString" >HOME=/home/evilsocket</value>
     <value type="QString" >LANG=it_IT.UTF-8</value>
-    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString" >LOGNAME=evilsocket</value>
     <value type="QString" >ORBIT_SOCKETDIR=/tmp/orbit-evilsocket</value>
@@ -125,7 +124,6 @@
     <value type="QString" >GTK_RC_FILES=/etc/gtk/gtkrc:/home/evilsocket/.gtkrc-1.2-gnome2</value>
     <value type="QString" >HOME=/home/evilsocket</value>
     <value type="QString" >LANG=it_IT.UTF-8</value>
-    <value type="QString" >LANGUAGE=</value>
     <value type="QString" >LD_LIBRARY_PATH=/usr/lib/qtcreator:</value>
     <value type="QString" >LOGNAME=evilsocket</value>
     <value type="QString" >ORBIT_SOCKETDIR=/tmp/orbit-evilsocket</value>
