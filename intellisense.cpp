@@ -19,7 +19,7 @@
 
 #include "intellisense.h"
 
-#define WEIGHT 300
+#define WIDTH 300
 #define HEIGHT 100
 
 Intellisense::Intellisense(QWidget *parent)
@@ -43,27 +43,45 @@ Intellisense::Intellisense(QWidget *parent)
 
 void Intellisense::prev_item()
 {
-    matches->setCurrentRow(matches->currentRow()-1);
+    if( matches->currentRow() > 0)
+        matches->setCurrentRow(matches->currentRow()-1);
 }
 
 void Intellisense::next_item()
 {
-    matches->setCurrentRow(matches->currentRow()+1);
+    if( matches->currentRow() < matches->count()-1)
+        matches->setCurrentRow(matches->currentRow()+1);
 }
 
 void Intellisense::onKeyPress( int key, QTextCursor& cursor, QPlainTextEdit *editor ){
     QString strkey = QString(char(key));
+
+    // il tasto è una lettera, un numero o _ ?
     if( strkey.contains( QRegExp( "[a-zA-Z0-9_]+" ) ) ){
         this->word += char(key);
+        // fa partire l'auto complete al secondo carattere
         if( this->word.size() >= 2 ){
+            // resetto la lista dei match
             matches->clear();
+            int maxlen = 0;
+            // loopo tutte le api documentate
             foreach( QString api, apis ){
+                // il nome dell'api inizia con i caratteri appena inseriti ?
                 if( api.startsWith( this->word, Qt::CaseInsensitive ) ){
                     matches->addItem(api);
+                    // determino la lunghezza massima del nome di un api per dimensionare il box
+                    if( api.size() > maxlen ){
+                        maxlen = api.size();
+                    }
                 }
             }
-            matches->setCurrentRow(0);
+            // se ci sono stati match
             if( matches->count() ){
+                matches->setCurrentRow(0);
+                // imposto la nuova larghezza in base alla stringa più lunga inserita
+                setGeometry( x(), y(),
+                             50 + fontMetrics().width( QLatin1Char('9') ) * maxlen,
+                             HEIGHT );
                 this->show();
             }
         }
@@ -71,26 +89,43 @@ void Intellisense::onKeyPress( int key, QTextCursor& cursor, QPlainTextEdit *edi
     else{
         switch( key ){
             case Qt::Key_Space:
+                // resetto il buffer
                 this->word = "";
                 setVisible(false);
                 break;
 
             case Qt::Key_Backspace:
+                // elimino l'ultimo carattere dal buffer
                 this->word.chop(1);
                 setVisible(false);
                 break;
 
             case Qt::Key_Return:
+                // resetto il buffer
                 this->word = "";
+
                 if( isVisible() ){
                     int         position = cursor.position() - 1;
                     QString     str      = QString( editor->toPlainText()[position] );
-
-                    while( str.contains( QRegExp( "[a-zA-Z0-9_]+" ) ) && position-- >= 1 ){
+                    // se non siamo nella prima riga
+                    if( position > 1 ){
+                        // loopo all'indietro i caratteri rimuovendoli finchè
+                        // non trovo l'inizio della parola digitata
+                        while( str.contains( QRegExp( "[a-zA-Z0-9_]+" ) ) && position-- >= 1 ){
+                            cursor.movePosition( QTextCursor::Left );
+                            cursor.deleteChar();
+                            str = editor->toPlainText()[position];
+                        }
+                    }
+                    // la prima riga è un caso particolare, poichè dobbiamo ignorare gli indici
+                    // e semplicemente cancellare a ritroso
+                    else{
                         cursor.movePosition( QTextCursor::Left );
                         cursor.deleteChar();
-                        str = editor->toPlainText()[position];
+                        cursor.movePosition( QTextCursor::Left );
+                        cursor.deleteChar();
                     }
+                    // inserisco il match selezionato
                     cursor.insertText( this->selected_match() );
                     this->hide();
                 }
@@ -120,7 +155,7 @@ void Intellisense::onKeyPress( int key, QTextCursor& cursor, QPlainTextEdit *edi
 
 void Intellisense::move(int x, int y)
 {
-    setGeometry(x,y,WEIGHT,HEIGHT);
+    setGeometry(x,y,WIDTH,HEIGHT);
 }
 
 QString Intellisense::selected_match()

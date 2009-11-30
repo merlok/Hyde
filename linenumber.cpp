@@ -267,11 +267,23 @@ void lineNumber::keyPressEvent(QKeyEvent *e)
         case Qt::Key_Backspace:
             backspace = true;
             break;
+
         case Qt::Key_Return:
             if( intellisense->isVisible() ){
                 enter = 1;
             }
             break;
+
+        case Qt::Key_Up:
+            if( intellisense->isVisible() ){
+                enter = 1;
+            }
+            break;
+
+        case Qt::Key_Down:
+            if( intellisense->isVisible() ){
+                enter = 1;
+            }
 
         default:
             backspace = false;
