@@ -30,14 +30,11 @@ MainWindow::MainWindow(QWidget *parent)
     findTool = new findDialog;
     findTool->setVisible(findVisible);
     ui->statusBar->setVisible(findVisible);
-    ui->actionCopy->setEnabled(false);
-    ui->actionCut->setEnabled(false);
-    ui->actionUndo->setEnabled(false);
-    ui->actionRedo->setEnabled(false);
-    ui->actionComment->setEnabled(false);
+
+   /* ui->actionComment->setEnabled(false);
     ui->actionUncomment->setEnabled(false);
     ui->actionIndent->setEnabled(false);
-    ui->actionUnindent->setEnabled(false);
+    ui->actionUnindent->setEnabled(false);*/
     //ui->actionPaste->setEnabled(false);
     ui->statusBar->addWidget(findTool);
     ui->dockWidget->setWidget(man);
@@ -45,14 +42,31 @@ MainWindow::MainWindow(QWidget *parent)
     fileName = "";
     filter = "All files (*.*);; Hybris Source (*.hs)";
 
+    ui->editor_tab->removeTab(0);
+    ui->editor_tab->removeTab(0);
+    //lineNumber *edit = new lineNumber();
+    //ui->editor_tab->addTab(edit, "Docuement");
+
     connect(ui->actionQuit,SIGNAL(triggered()),this,SLOT(close()));
     connect(findTool,SIGNAL(nextClicked()),this,SLOT(findNext()));
     connect(findTool,SIGNAL(prevClicked()),this,SLOT(findPrev()));
+    connect(ui->editor_tab, SIGNAL(currentChanged(int)), this, SLOT(currentTab(int)));
+    connect(ui->editor_tab, SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::currentTab(int index)
+{
+    codeEditor = (lineNumber *)ui->editor_tab->currentWidget();
+}
+
+void MainWindow::closeTab(int index)
+{
+    ui->editor_tab->removeTab(index);
 }
 
 void MainWindow::on_action_open_triggered()
@@ -66,7 +80,7 @@ void MainWindow::on_action_open_triggered()
         switch(msgBox.exec())
         {
             case QMessageBox::Save:
-                if (!ui->codeEditor->isNew)
+                if (!codeEditor->isNew)
                     MainWindow::on_action_Save_triggered();
                 else
                     MainWindow::on_actionSave_as_triggered();
@@ -84,12 +98,12 @@ void MainWindow::on_action_open_triggered()
 
 void MainWindow::on_action_Save_triggered()
 {
-    if (ui->codeEditor->changed && ui->codeEditor->isNew)
+    if (codeEditor->changed && codeEditor->isNew)
     {
         MainWindow::on_actionSave_as_triggered();
         return;
     }
-    int ret = ui->codeEditor->saveFile(fileName);
+    int ret = codeEditor->saveFile(codeEditor->fileName);
     if (!ret)
     {
         QMessageBox::warning(this,tr("warning"),"Cannot save the file...\nDo you have permission?",QMessageBox::Ok);
@@ -99,136 +113,66 @@ void MainWindow::on_action_Save_triggered()
 void MainWindow::on_actionSave_as_triggered()
 {
     fileName = QFileDialog::getSaveFileName(this,tr("Save file as"),QDir::homePath(),filter);
-    int ret = ui->codeEditor->saveFile(fileName);
+    int ret = codeEditor->saveFile(fileName);
     if (!ret) {
         QMessageBox::warning(this,tr("warning"),"Cannot save the file...\nDo you have permission?",QMessageBox::Ok);
     }
     else{
         ownChanges = false;
     }
+    ui->editor_tab->setTabText(ui->editor_tab->currentIndex(), QFileInfo(fileName).fileName());
+    codeEditor->fileName = fileName;
 }
 
 void MainWindow::on_action_new_triggered()
 {
-    if ( ownFile && ownChanges )
-    {
-        msgBox.setWindowTitle("File changed");
-        msgBox.setText("The file is changed do you want to save it?");
-        msgBox.setIcon(QMessageBox::Question);
-        msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        switch(msgBox.exec())
-        {
-            case QMessageBox::Save:
-                MainWindow::on_action_Save_triggered();
-                break;
-            case QMessageBox::Discard:
-                 ui->codeEditor->newFile();
-                 break;
-            case QMessageBox::Cancel:
-                 return;
-        }
-    }
-    else ui->codeEditor->newFile();
+    lineNumber *new_editor = new lineNumber();
+    int index = ui->editor_tab->addTab(new_editor, "Document");
+    ui->editor_tab->setCurrentIndex(index);
 }
 
 void MainWindow::openDialog()
 {
     fileName = QFileDialog::getOpenFileName(this,tr("Open File"),QDir::homePath(),filter);
     if (!fileName.isEmpty()) {
-        int ret = ui->codeEditor->openFile(fileName);
+        lineNumber *editor = new lineNumber();
+        int ret = editor->openFile(fileName);
         if (!ret) {
             QMessageBox::warning(this,tr("warning"),"The selected file not exist",QMessageBox::Ok);
         }
         else{
+            int index = ui->editor_tab->addTab(editor, QFileInfo(fileName).fileName());
+            ui->editor_tab->setCurrentIndex(index);
+            codeEditor->fileName = fileName;
             ownFile    = true;
             ownChanges = false;
         }
     }
 }
 
-void MainWindow::on_codeEditor_copyAvailable(bool b)
-{
-    ui->actionCopy->setEnabled(b);
-    ui->actionCut->setEnabled(b);
-}
-
-void MainWindow::on_codeEditor_redoAvailable(bool b)
-{
-    ui->actionRedo->setEnabled(b);
-}
-
-void MainWindow::on_codeEditor_undoAvailable(bool b)
-{
-    ui->actionUndo->setEnabled(b);
-}
-
-void MainWindow::on_actionUndo_triggered()
-{
-    ui->codeEditor->undo();
-}
-
-void MainWindow::on_actionRedo_triggered()
-{
-    ui->codeEditor->redo();
-}
-
-void MainWindow::on_actionCopy_triggered()
-{
-    ui->codeEditor->copy();
-}
-
-void MainWindow::on_actionPaste_triggered()
-{
-    ui->codeEditor->paste();
-}
-
-void MainWindow::on_actionCut_triggered()
-{
-    ui->codeEditor->cut();
-}
-
-void MainWindow::on_codeEditor_selectionChanged()
-{
-    QTextCursor cursor  = ui->codeEditor->textCursor();
-    if (!cursor.selectedText().isEmpty())
-    {
-        ui->actionIndent->setEnabled(true);
-        ui->actionUnindent->setEnabled(true);
-        ui->actionComment->setEnabled(true);
-        ui->actionUncomment->setEnabled(true);
-    }
-    else
-    {
-        ui->actionComment->setEnabled(false);
-        ui->actionUncomment->setEnabled(false);
-        ui->actionIndent->setEnabled(false);
-        ui->actionUnindent->setEnabled(false);
-    }
-}
-
 void MainWindow::on_actionComment_triggered()
 {
-    ui->codeEditor->commentSelection(ui->codeEditor->textCursor());
+    codeEditor->commentSelection(codeEditor->textCursor());
 }
 
 void MainWindow::on_actionUncomment_triggered()
 {
-    ui->codeEditor->uncommentSelection(ui->codeEditor->textCursor());
+    codeEditor->uncommentSelection(codeEditor->textCursor());
 }
 
 void MainWindow::on_actionIndent_triggered()
 {
-    ui->codeEditor->indentSelection(ui->codeEditor->textCursor());
+    codeEditor->indentSelection(codeEditor->textCursor());
 }
 
 void MainWindow::findNext()
 {
-    findTool->findNext(ui->codeEditor);
+    findTool->findNext(codeEditor);
 }
 
 void MainWindow::findPrev()
 {
-    findTool->findPrev(ui->codeEditor);
+    findTool->findPrev(codeEditor);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *e)

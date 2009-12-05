@@ -33,6 +33,7 @@ lineNumber::lineNumber(QWidget *parent) : QPlainTextEdit(parent)
     changed = false;
     isNew = true;
     backspace=false;
+    fileName = "";
 
     intellisense = new Intellisense(this);
 }

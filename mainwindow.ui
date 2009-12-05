@@ -16,7 +16,27 @@
   <widget class="QWidget" name="centralWidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="lineNumber" name="codeEditor"/>
+     <widget class="QTabWidget" name="editor_tab">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -26,7 +46,7 @@
      <x>0</x>
      <y>0</y>
      <width>600</width>
-     <height>24</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -45,12 +65,7 @@
     <property name="title">
      <string>Edit</string>
     </property>
-    <addaction name="actionUndo"/>
-    <addaction name="actionRedo"/>
     <addaction name="separator"/>
-    <addaction name="actionCut"/>
-    <addaction name="actionCopy"/>
-    <addaction name="actionPaste"/>
     <addaction name="separator"/>
     <addaction name="actionIndent"/>
     <addaction name="actionUnindent"/>
@@ -72,12 +87,7 @@
    <addaction name="action_open"/>
    <addaction name="action_Save"/>
    <addaction name="separator"/>
-   <addaction name="actionUndo"/>
-   <addaction name="actionRedo"/>
    <addaction name="separator"/>
-   <addaction name="actionCut"/>
-   <addaction name="actionCopy"/>
-   <addaction name="actionPaste"/>
    <addaction name="separator"/>
    <addaction name="actionIndent"/>
    <addaction name="actionUnindent"/>
@@ -189,66 +199,6 @@
     <string>Unindent selection</string>
    </property>
   </action>
-  <action name="actionCopy">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/img/img/copy.png</normaloff>:/img/img/copy.png</iconset>
-   </property>
-   <property name="text">
-    <string>copy</string>
-   </property>
-   <property name="toolTip">
-    <string>Copy selected text</string>
-   </property>
-  </action>
-  <action name="actionPaste">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/img/img/paste.png</normaloff>:/img/img/paste.png</iconset>
-   </property>
-   <property name="text">
-    <string>Paste</string>
-   </property>
-   <property name="toolTip">
-    <string>Paste copied text</string>
-   </property>
-  </action>
-  <action name="actionCut">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/img/img/cut.png</normaloff>:/img/img/cut.png</iconset>
-   </property>
-   <property name="text">
-    <string>Cut</string>
-   </property>
-   <property name="toolTip">
-    <string>Cut selected text</string>
-   </property>
-  </action>
-  <action name="actionUndo">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/img/img/undo.png</normaloff>:/img/img/undo.png</iconset>
-   </property>
-   <property name="text">
-    <string>Undo</string>
-   </property>
-   <property name="toolTip">
-    <string>Undo</string>
-   </property>
-  </action>
-  <action name="actionRedo">
-   <property name="icon">
-    <iconset resource="images.qrc">
-     <normaloff>:/img/img/redo.png</normaloff>:/img/img/redo.png</iconset>
-   </property>
-   <property name="text">
-    <string>Redo</string>
-   </property>
-   <property name="toolTip">
-    <string>Redo</string>
-   </property>
-  </action>
   <action name="actionSave_as">
    <property name="icon">
     <iconset resource="images.qrc">
@@ -269,13 +219,6 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <customwidgets>
-  <customwidget>
-   <class>lineNumber</class>
-   <extends>QPlainTextEdit</extends>
-   <header location="global">linenumber.h</header>
-  </customwidget>
- </customwidgets>
  <resources>
   <include location="images.qrc"/>
  </resources>

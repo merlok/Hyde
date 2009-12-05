@@ -25,6 +25,7 @@
 #include <QTextCursor>
 #include "manviever.h"
 #include "finddialog.h"
+#include "linenumber.h"
 
 namespace Ui
 {
@@ -50,27 +51,20 @@ private:
     bool findVisible;
     bool ownFile;
     bool ownChanges;
+    lineNumber *codeEditor;
 
 private slots:
     void on_actionIndent_triggered();
     void on_actionUncomment_triggered();
-    void on_actionComment_triggered();
-    void on_codeEditor_selectionChanged();
-    void on_actionCut_triggered();
-    void on_actionPaste_triggered();
-    void on_actionCopy_triggered();
-    void on_actionRedo_triggered();
-    void on_actionUndo_triggered();
-    void on_codeEditor_undoAvailable(bool b);
-    void on_codeEditor_redoAvailable(bool b);
-    void on_codeEditor_copyAvailable(bool b);
     void on_action_new_triggered();
     void on_actionSave_as_triggered();
     void on_action_Save_triggered();
     void on_action_open_triggered();
+    void on_actionComment_triggered();
     void findNext();
     void findPrev();
-
+    void currentTab(int index);
+    void closeTab(int index);
 protected:
     void keyPressEvent(QKeyEvent *e);
 };

@@ -54,6 +54,7 @@ public:
     void commentSelection(QTextCursor cursor);
     void uncommentSelection(QTextCursor cursor);
     void indentSelection(QTextCursor cursor);
+    QString fileName;
 
 protected:
     void resizeEvent(QResizeEvent *event);
