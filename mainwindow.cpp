@@ -134,8 +134,8 @@ void MainWindow::on_action_new_triggered()
 void MainWindow::openDialog()
 {
     fileName = QFileDialog::getOpenFileName(this,tr("Open File"),QDir::homePath(),filter);
+    lineNumber *editor = new lineNumber();
     if (!fileName.isEmpty()) {
-        lineNumber *editor = new lineNumber();
         int ret = editor->openFile(fileName);
         if (!ret) {
             QMessageBox::warning(this,tr("warning"),"The selected file not exist",QMessageBox::Ok);
